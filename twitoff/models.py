@@ -14,7 +14,7 @@ class User(DB.Model):
     def __repr__(self):
         return '-User {}-'.format(self.name)
 
-# Tweet class can have a user argument
+
 class Tweet(DB.Model):
     """Tweet text and data."""
     id = DB.Column(DB.BigInteger, primary_key=True)
