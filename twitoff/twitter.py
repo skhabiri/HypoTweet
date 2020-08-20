@@ -5,10 +5,7 @@ import tweepy
 from .models import DB, Tweet, User
 
 
-TWITTER_USERS = ['calebhicks', 'elonmusk', 'rrherr', 'SteveMartinToGo',
-                 'alyankovic', 'nasa', 'sadserver', 'jkhowland', 'austen',
-                 'common_squirrel', 'KenJennings', 'conanobrien',
-                 'big_ben_clock', 'IAM_SHAKESPEARE']
+TWITTER_USERS = ['austen', 'elonmusk', 'KingJames', 'kylegriffin1']
 
 TWITTER_API_KEY = getenv('TWITTER_API_KEY')
 TWITTER_API_KEY_SECRET = getenv('TWITTER_API_KEY_SECRET')
@@ -48,7 +45,5 @@ def add_or_update_user(username):
 
 def insert_example_users():
     """Example data to play with."""
-    add_or_update_user('austen')
-    add_or_update_user('elonmusk')
-    add_or_update_user('KingJames')
-    add_or_update_user('chozyntradez')
+    for user in TWITTER_USERS:
+        add_or_update_user(user)
