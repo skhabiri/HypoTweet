@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TwitOff - {{ title }}</title>
+    <title>TwitOff_skhabiri - {{ title }}</title>
     <link rel="stylesheet" href="https://unpkg.com/picnic"/>
   </head>
   <body>
@@ -33,8 +33,18 @@
             <option value="{{ user.name }}">{{ user.name }}</option>
             {% endfor %}
           </select>
-          <input type="text" name="tweet_text" placeholder="Tweet text to predict">
-          <input type="submit" value="Compare Users">
+          <select name="user3">
+            {% for user in users %}
+            <option value="{{ user.name }}">{{ user.name }}</option>
+            {% endfor %}
+          </select>
+          <select name="user4">
+            {% for user in users %}
+            <option value="{{ user.name }}">{{ user.name }}</option>
+            {% endfor %}
+          </select>
+          <input type="text" name="tweet_text" placeholder="Hypothetical Tweet">
+          <input type="submit" value="Predicted User">
         </form>
       </div>
       <div>
@@ -43,7 +53,7 @@
         <a href="/user/{{ user.name }}"><span class="stack">{{ user.name }}</span></a>
         {% endfor %}
         <form action="/user" method="post">
-          <input type="text" name="user_name" placeholder="User to add">
+          <input type="text" name="user_name" placeholder="Type a twitter user name">
           <input type="submit" value="Add User">
         </form>
       </div>

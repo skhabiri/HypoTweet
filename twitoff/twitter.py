@@ -38,7 +38,7 @@ def add_or_update_user(username):
                              embedding=embedding)
             db_user.tweets.append(db_tweet)
             DB.session.add(db_tweet)
-            DB.session.add(db_user)
+            # DB.session.add(db_user)
     except Exception as e:
         print('Error processing {}: {}'.format(username, e))
         raise e
@@ -50,3 +50,5 @@ def insert_example_users():
     """Example data to play with."""
     add_or_update_user('austen')
     add_or_update_user('elonmusk')
+    add_or_update_user('KingJames')
+    add_or_update_user('chozyntradez')
