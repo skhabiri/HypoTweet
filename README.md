@@ -3,8 +3,10 @@ A web application that takes up to 4 users. It connects to Twitter API to pull t
 Once a tweet is entered it fits a multiclass logistic regression on the selected users' tweets which have previousely been embeded with basilica and stored in database. Then it connects to basilica API to embed the hypothetical tweet into 670 vectors and then runs a prediction on that to identify which user might have said that.
 ___
 
-# Productization-and-Cloud-u3s3
-Web Application Development with Flask-u3s3m1:
+## Productization-and-Cloud-u3s3
+
+###Web Application Development with Flask-u3s3m1:
+
 * Frontend-backend-database:
    * Frontend is presentation and interactions. Frontend code runs on the client machine. It defines what is rendered on the client side, and interacts with the client.
    * Backend is the business logic where data is processed and exchanged with the frontend. For scaling we might have multiple servers in the backend that are stateless, receiving requests and responding. They are all connected to the same database server.
@@ -44,9 +46,12 @@ steps to follow:
    * resultu[0].tweets[0].text
    * resultt.user.name
 ___
-Consuming-data-from-an-api-u3s3m2:
+### Consuming-data-from-an-api-u3s3m2:
+
 Instead of having a monolithic app with all the front-end, database, and backend as one service, the new approach is to have multiple micro services where each server provides a specific service.
-### Connect to Twitter API: 
+
+**Connect to Twitter API:**
+
 * get access to twitter developer. Then create a standalone app to get a API key, which is an identifier for the app and API secret key which is the password. 
 * install tweepy locally to connect to the twitter api
 * TWITTER_API_KEY = ‘<api_key>’
@@ -79,7 +84,7 @@ Instead of having a monolithic app with all the front-end, database, and backend
 * len(embedding)
 * Can use `git diff twitoff/models.py` to see the recent changes
 ___
-Adding Data Science to a Web Application-u3s3m3:
+### Adding Data Science to a Web Application-u3s3m3:
 Each tweet is embedded into 670 vectors by basilica and then a logistic regression is fit to classify a hypothetical tweet. There are three ways to interact between python file and html file.  
 * We use flask.request.values to access user entries through the html post method argument “name”. such as user1, user2, user3, user4, tweet_text, user_name
    * <form action="/compare" method="post">
@@ -98,7 +103,8 @@ Each tweet is embedded into 670 vectors by basilica and then a logistic regressi
    *  <a href="/user/{{ user.name }}">
    * @app.route('/user/<name>', methods=['GET'])
    *     def user(name=None, message=''):
-### File Structure:
+
+**File Structure:**
 1. TwitOff                                #Project directory
 * Pipfile
 * Procfile
@@ -114,7 +120,8 @@ Each tweet is embedded into 670 vectors by basilica and then a logistic regressi
       * user.html        # inherits from base and render the add user, or existing user page
       * prediction.html        # compare route 
 ____
-Web Application Deployment-u3s3m4:
+### Web Application Deployment-u3s3m4:
+  
 We are going to deploy the app on heroku. For that we need to use the postgreSQL instead of local sqlite db. follow these steps:
 * on heroku platform create an app
 * use heroku CLI to push your code to heroku
