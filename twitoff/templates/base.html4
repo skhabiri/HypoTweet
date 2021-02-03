@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HypoTweet - {{ title }}</title>
+    <title>TwitOff_skhabiri - {{ title }}</title>
     <link rel="stylesheet" href="https://unpkg.com/picnic"/>
   </head>
   <body>
     <nav>
-      <a href="/" class="brand"><span>Hypothetical Tweet!</span></a>
+      <a href="/" class="brand"><span>TwitOff!</span></a>
 
       <!-- responsive-->
       <input id="bmenub" type="checkbox" class="show">
@@ -43,8 +43,8 @@
             <option value="{{ user.name }}">{{ user.name }}</option>
             {% endfor %}
           </select>
-          <input type="text" name="tweet_text" placeholder="Enter a hypothetical tweet">
-          <input type="submit" value="Predict the user">
+          <input type="text" name="tweet_text" placeholder="Hypothetical Tweet">
+          <input type="submit" value="Predicted User">
         </form>
       </div>
       <div>
