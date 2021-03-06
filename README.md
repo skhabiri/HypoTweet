@@ -87,22 +87,28 @@ ___
 ### Adding Data Science to a Web Application-u3s3m3:
 Each tweet is embedded into 670 vectors by basilica and then a logistic regression is fit to classify a hypothetical tweet. There are three ways to interact between python file and html file.  
 * We use flask.request.values to access user entries through the html post method argument “name”. such as user1, user2, user3, user4, tweet_text, user_name
+```  
    * <form action="/compare" method="post">
    *  <select name="user1">
    * request.values['user1'],
    * <form action="/user" method="post">
    *         <input type="text" name="user_name" placeholder="Type a user">
    * request.values['user_name']
-   * * in .py file we use arguments of render_template(), such as tweets, users, title, message to pass a value to jinja2 variables in html
+```   
+* in .py file we use arguments of render_template(), such as tweets, users, title, message to pass a value to jinja2 variables in html
+```   
    * {% for user in users %}
    *  <h1>{{ title }}</h1>
    * {% for tweet in tweets %}
    * return render_template('user.html', title=name, tweets=tweets, message=message)
    *   return render_template('base.html', title='Home', users=User.query.all())
-   * * through jinja2 we add a variable to the route in GET method such as /user/{{ user.name }}. Then in .py we pass the variable to the function under the decorator.
+```
+* through jinja2 we add a variable to the route in GET method such as /user/{{ user.name }}. Then in .py we pass the variable to the function under the decorator.
+```   
    *  <a href="/user/{{ user.name }}">
    * @app.route('/user/<name>', methods=['GET'])
    *     def user(name=None, message=''):
+```
 
 **File Structure:**
 1. TwitOff                                #Project directory
