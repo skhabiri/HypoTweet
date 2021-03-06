@@ -110,7 +110,7 @@ Each tweet is embedded into 670 vectors by basilica and then a logistic regressi
    *     def user(name=None, message=''):
 ```
 
-**File Structure:**
+### File Structure:
 1. TwitOff                                #Project directory
 * Pipfile
 * Procfile
@@ -143,6 +143,7 @@ We are going to deploy the app on heroku. For that we need to use the postgreSQL
 * `heroku addons:create heroku-postgresql:hobby-dev`        #this on CLI will setup a postgres db for the app as an add-on in free tier and it calls is “DATABSE_URL”
 * now on browser more>restart all dynos
 * database is empty and wouldn’t run till we hit the /reset or /update route and create the database.
+
 To avoid training the model everytime that we make a prediction we can serialize the model and save it as a file or string. dump(), load() are used to save it as a file and dumps, loads are used to dump and load it as a string.
 * log_reg_string = pickle.dumps(log_reg)        # log_reg is the trained model
 * log_reg_reloaded = pickle.loads(log_reg_string)
