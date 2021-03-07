@@ -13,7 +13,7 @@ import tweepy
 from .models import DB, Tweet, User
 
 
-TWITTER_USERS = ['zerohedge', 'nasa', 'espn', '@AmerMedicalAssn']
+TWITTER_USERS = ['zerohedge', 'nasa', 'espn', 'AmerMedicalAssn']
 
 TWITTER_API_KEY = getenv('TWITTER_API_KEY')
 TWITTER_API_KEY_SECRET = getenv('TWITTER_API_KEY_SECRET')
