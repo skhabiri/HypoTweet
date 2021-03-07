@@ -17,6 +17,7 @@ gunicorn = "*"
 pipfile = "*"
 psycopg2-binary = "*"
 flask = "*"
+spacy = "*"
 
 [requires]
 python_version = "3.7"
