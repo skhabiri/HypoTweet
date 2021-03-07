@@ -21,7 +21,7 @@ TWITTER_AUTH = tweepy.OAuthHandler(TWITTER_API_KEY, TWITTER_API_KEY_SECRET)
 TWITTER = tweepy.API(TWITTER_AUTH)
 # BASILICA = basilica.Connection(getenv('BASILICA_KEY'))
 
-# nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en_core_web_sm")
 
 def add_or_update_user(username):
     """pull a user from twitter if not already in db
@@ -49,7 +49,7 @@ def add_or_update_user(username):
             db_user.newest_tweet_id = tweets[0].id
         for tweet in tweets:
             # embedding = BASILICA.embed_sentence(tweet.full_text, model='twitter')
-            # embedding = nlp(tweet.full_text).vector
+            embedding = nlp(tweet.full_text).vector
             
             db_tweet = Tweet(id=tweet.id, text=tweet.full_text[:300], embedding=embedding)
             
