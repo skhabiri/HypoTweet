@@ -1,6 +1,6 @@
-# TwitOff
-A web application that takes up to 4 users. It connects to Twitter API to pull the user information including user id, latest tweets, tweet id. For a hypothetical tweet it predicts which of the users might have said that.
-Once a tweet is entered it fits a multiclass logistic regression on the selected users' tweets which have previousely been embeded with basilica and stored in database. Then it connects to basilica API to embed the hypothetical tweet into 670 vectors and then runs a prediction on that to identify which user might have said that.
+# HypoTweet
+It's the project directory for `twitapp`, a web application that takes up to 4 users. It connects to Twitter API to pull the user information including user id, latest tweets, tweet id. For a hypothetical tweet it predicts which of the users might have said that.
+Once a tweet is entered it fits a multiclass logistic regression on the selected users' tweets which have previousely been embeded with spacy and stored in database. Then it connects to basilica API to embed the hypothetical tweet into 96 vectors and then runs a prediction on that to identify which user might have said that.
 ___
 
 ## Productization-and-Cloud-u3s3
@@ -15,7 +15,7 @@ Flask is a python web application framework. As an example, Plotly dash is built
 steps to follow:
 * Create twitoff repository
 * git clone the repo on your local machine
-* create virtual environment `pipenv --python 3.6`
+* create virtual environment `pipenv --python 3.7`
 * pipenv shell
 * pipenv install flask jinja2 flask-sqlalchemy
 * Create a basic app with hello.py
@@ -28,13 +28,13 @@ steps to follow:
    * This is a minimal flask app
 * Now create a directory for app with __init__.py file as the point of entry for the app
 * create app.py as the main app/routing file. By default FLASK looks for that.
-* At base directory enter `FLASK_APP=twitterclf:APP flask run` to run the app locally.
-   * It would also run without the name of the application, APP, `FLASK_APP=twitterclf flask run`, or going to application directory twitterclf\> and enter `flask run`
+* At base directory enter `FLASK_APP=twitapp:APP flask run` to run the app locally.
+   * It would also run without the name of the application, APP, `FLASK_APP=twitapp flask run`, or going to application directory twitapp\> and enter `flask run`
 * Instead of static return for a route we can return render_template(html file). The {} in html is jinja2 syntax allows passing parameters to flask.render_template(). flask app looks for templates directory under app directory.
 * create model.py under app directory for sqlalchemy. sqlalchemy is used to connect to a sql database without having to write sql queries. It is used mostly for web applications. Here we create classes to define data model and use the lower case of the class as sql table name. entries of the table are instances of the data model class.
    * User.id, User.name, Tweet.id, Tweet.text, Tweet.user_id
-* we can get a flask configured shell in the context of our app with `FLASK_APP=twitterclf:APP flask shell`. This is useful for debugging.
-   * from twitterclf.models import User, Tweet, DB
+* we can get a flask configured shell in the context of our app with `FLASK_APP=twitapp:APP flask shell`. This is useful for debugging.
+   * from twitapp.models import User, Tweet, DB
    * austen = User(id=1, name=’austen’)
    * austen
    * elon = User(id=2, name=’elonmusk’)
@@ -67,9 +67,9 @@ Instead of having a monolithic app with all the front-end, database, and backend
 * len(tweets), tweets[0].text
 * create a module in the app named twitter.py to add the twitter api code.
 * We code a function to pull a twitter user from api based on the twitter handle. Then add that to User and Tweet models in the database with id and name and append all the tweets. Here is how to test it in flask shell:
-   * FLASK_APP=twitoff flask shell
-   * from twitoff.twitter import add_or_update_user
-   * from twitoff.models import User, Tweet, DB
+   * FLASK_APP=twitapp flask shell
+   * from twitapp.twitter import add_or_update_user
+   * from twitapp.models import User, Tweet, DB
    * User.query.all()
    * add_or_update_user(‘kingjames’)
    * User.query.all()
@@ -77,15 +77,17 @@ Instead of having a monolithic app with all the front-end, database, and backend
    * user2 = User.query.filter(User.name==’kingjames’).one()        #in case there are multiple matches return only one
    * len(user2.tweets)
    * user2.tweets[0]
-* To process the tweets we use Basilica embedding. Go to basilica and get the API key for your application.
-* create a basilica object b = basilica.Connection(basilica_key)
+* ~~To process the tweets we use Basilica embedding. Go to basilica and get the API key for your application.~~
+* ~~create a basilica object b = basilica.Connection(basilica_key)~~
+* We use spaCy for embedding. `nlp = spacy.load("en_core_web_sm")`
 * tweet_text = user2.tweets[0].text
-* embedding = b.embed_sentence(tweet_text, model=’twitter’)
+* ~~embedding = b.embed_sentence(tweet_text, model=’twitter’)~~
+* embedding = nlp(tweet.full_text).vector
 * len(embedding)
-* Can use `git diff twitoff/models.py` to see the recent changes
+* Can use `git diff twitapp/models.py` to see the recent changes
 ___
 ### Adding Data Science to a Web Application-u3s3m3:
-Each tweet is embedded into 670 vectors by basilica and then a logistic regression is fit to classify a hypothetical tweet. There are three ways to interact between python file and html file.  
+Each tweet is embedded into 96 vectors by spaCy and then a logistic regression is fit to classify a hypothetical tweet. There are three ways to interact between python file and html file.  
 * We use flask.request.values to access user entries through the html post method argument “name”. such as user1, user2, user3, user4, tweet_text, user_name
 ```  
    * <form action="/compare" method="post">
@@ -111,15 +113,15 @@ Each tweet is embedded into 670 vectors by basilica and then a logistic regressi
 ```
 
 ### File Structure:
-1. TwitOff                                #Project directory
+1. HypoTweet                                #Project directory
 * Pipfile
 * Procfile
 * .env
-* twitoff                        # web app directory
+* twitapp                        # web app directory
    * __init__.py        # App point of entry, instantiate a flask app
    * app.py                # create app function, connect db, routings are here
    * models.py        # Data model for sqlalchemy db
-   * twitter.py        # twitter api and basilica embedding
+   * twitter.py        # twitter api and spacy embedding
    * predict.py        # logistic regression model and predict function
    * templates        # sub directory containing the html templates
       * base.html        # Home page
@@ -139,7 +141,7 @@ We are going to deploy the app on heroku. For that we need to use the postgreSQL
 * `heroku git:remote -a <heroku app name>`        # add heroku remote to git repository
 * `git push heroku master`
 * can see the log file by `heroku logs`
-* .env is not pushed to heroku. we add twitter and basilica keys in settings>config Vars
+* .env is not pushed to heroku. we add twitter and ~~basilica~~ keys in settings>config Vars
 * `heroku addons:create heroku-postgresql:hobby-dev`        #this on CLI will setup a postgres db for the app as an add-on in free tier and it calls is “DATABSE_URL”
 * now on browser more>restart all dynos
 * database is empty and wouldn’t run till we hit the /reset or /update route and create the database.
