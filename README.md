@@ -50,7 +50,10 @@ ___
 
 Instead of having a monolithic app with all the front-end, database, and backend as one service, the new approach is to have multiple micro services where each server provides a specific service.
 
-**Connect to Twitter API:**
+### install spacy:
+in the activated virtual environment use `pipenv instal spacy`. For the model if we were only running locally, we would simply download and install the model with `python -m spacy download en_core_web_sm`. However, for deploying on heroku we use `pipenv install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz`. This version of en_core_web_sm requires python 3.8.
+
+### Connect to Twitter API:
 
 * get access to twitter developer. Then create a standalone app to get a API key, which is an identifier for the app and API secret key which is the password. 
 * install tweepy locally to connect to the twitter api
@@ -145,6 +148,7 @@ We are going to deploy the app on heroku. For that we need to use the postgreSQL
 * `heroku addons:create heroku-postgresql:hobby-dev`        #this on CLI will setup a postgres db for the app as an add-on in free tier and it calls is “DATABSE_URL”
 * now on browser more>restart all dynos
 * database is empty and wouldn’t run till we hit the /reset or /update route and create the database.
+* For testing and avoid repeated deployment we can locally test the app with `heroku local`.
 
 To avoid training the model everytime that we make a prediction we can serialize the model and save it as a file or string. dump(), load() are used to save it as a file and dumps, loads are used to dump and load it as a string.
 * log_reg_string = pickle.dumps(log_reg)        # log_reg is the trained model
