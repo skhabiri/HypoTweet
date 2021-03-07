@@ -1,10 +1,10 @@
-"""Main app/routing file for TwitOff."""
+"""Main app/routing file for twitapp."""
 from os import getenv
 
 # different from requests library
 from flask import Flask, render_template, request
 # request: passes variable from html POST to .py
-# render_template: passes variable from .py to jinja2 in html
+# render_template: passes variable from .py to jinja2 used in html
 
 # import from .py files comes with relative path "."
 from .models import DB, User
@@ -13,7 +13,11 @@ from .twitter import add_or_update_user, insert_example_users
 
 
 def create_app():
-    """Create and configure an instance of the Flask application."""
+    """Create and configure an instance of the Flask application.
+    1. instantiate the flask app
+    2. connect the database
+    3. create the routes
+    """
     app = Flask(__name__)   
     
     # telling app where to connect to the database
@@ -36,7 +40,7 @@ def create_app():
         return render_template('base.html', title='Home',
                                users=User.query.all())
 
-    # We can have two decorators with one function
+    # It;s possible to have two decorators with only one function
     # Post means the user posts some information 'user_name'
     # Get means the user gets some information back, <name>
     # In GET method, <name> is a variable that is passed from url to the decorator function
