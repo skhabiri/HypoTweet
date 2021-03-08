@@ -19,32 +19,25 @@
     </nav>
 
     <article class="flex two" style="padding: 3em 1em;">
+
       {% block content %}
       <div>
         <h1>{{ title }}</h1>
         <form action="/compare" method="post">
-          <select name="user1">
+          {% for n in ["1", "2", "3", "4"] %}
+
+          <select name="{{ 'user' + n }}">
+            <option value="" selected disabled hidden>Choose user</option>
             {% for user in users %}
             <option value="{{ user.name }}">{{ user.name }}</option>
             {% endfor %}
           </select>
-          <select name="user2">
-            {% for user in users %}
-            <option value="{{ user.name }}">{{ user.name }}</option>
-            {% endfor %}
-          </select>
-          <select name="user3">
-            {% for user in users %}
-            <option value="{{ user.name }}">{{ user.name }}</option>
-            {% endfor %}
-          </select>
-          <select name="user4">
-            {% for user in users %}
-            <option value="{{ user.name }}">{{ user.name }}</option>
-            {% endfor %}
-          </select>
+          {% endfor %}
+
+
           <input type="text" name="tweet_text" placeholder="Enter a hypothetical tweet">
           <input type="submit" value="Predict the user">
+
         </form>
       </div>
       <div>
@@ -52,6 +45,7 @@
         {% for user in users %}
         <a href="/user/{{ user.name }}"><span class="stack">{{ user.name }}</span></a>
         {% endfor %}
+
         <form action="/user" method="post">
           <input type="text" name="user_name" placeholder="Type a twitter user name">
           <input type="submit" value="Add User">

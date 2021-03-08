@@ -73,27 +73,57 @@ def create_app():
         tweet_text is  the hypothetical tweet passed from html to python with request.values
         we get the user names of the selected users. Then run a logistic regression on the embedded
         tweets of those users that exist in db, and predict which one the hypothetical tweet belongs to.
+
+        It needs atleast two users to be selected. 
         """
 
-        # depending on which user is selected first on the form user1 in html might be assigned
-        # Regardless of that we would not need sort!
-        user1, user2, user3, user4 = sorted([request.values['user1'],
-                                     request.values['user2'],
-                                     request.values['user3'],
-                                     request.values['user4'],
-                                     ])
-        # for debugging
-        print("\n\nuser1:{}, user4:{}\n\n".format(user1, user4))
+        # Might need sort depending on html behavior on how to pass it
+        count = 0
+        username = [None] * 4
+
+        for i in range(4):
+            name = f'user{i+1}'
+
+            try:
+                username[i] = request.values[name]
+                count += 1
+            except Exception as e:
+                pass
+            
+            # only if exception hasn't occured. Though not needed here
+            else:
+                filler = username[i]
+                continue
+            # always enter this
+            finally:
+                print("*"*20, username[i])
+                continue
+        if (count < 2) or (username[0] == username[1] == username[2] == username[3]):
+            message = "Please select two or more different users"
+            return render_template('prediction.html', title='Prediction', message=message)
         
-        if user1 == user2 == user3 == user4:
-            message = 'Select two or more different users!'
-        else:
-            user_name = predict_user(user1, user2, user3, user4,
-                                      request.values['tweet_text'])
-            message = '"{}" is more likely to be said by {}'.format(
-                request.values['tweet_text'], user_name)
-        return render_template('prediction.html', title='Prediction',
-                               message=message)
+        # Not-selected users are filled with one the selected ones
+        elif count != 4:
+            for i in range(4):
+                if not username[i]:
+                    username[i] = filler
+
+        try:
+            hypotext = request.values['tweet_text']
+        
+        except Exception as e:
+            message = "Please enter a hypothetical tweet"
+            return render_template('prediction.html', title='Prediction', message=message)
+        
+        if len(hypotext) == 0:
+            message = "Please enter a hypothetical tweet"
+            return render_template('prediction.html', title='Prediction', message=message)
+
+
+        user_name = predict_user(username[0], username[1], username[2], username[3], hypotext)
+        message = '"{}" is more likely to be said by {}'.format(hypotext, user_name)
+        
+        return render_template('prediction.html', title='Prediction', message=message)
 
     # create another route
     @app.route('/update')
