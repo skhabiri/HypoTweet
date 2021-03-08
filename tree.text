@@ -1,0 +1,23 @@
+.
+├── .env
+├── LICENSE
+├── Pipfile
+├── Pipfile.lock
+├── Procfile
+├── README.md
+├── tree.text
+└── twitapp
+    ├── __init__.py
+    ├── app.py
+    ├── db.sqlite3
+    ├── models.py
+    ├── predict.py
+    ├── templates
+    │   ├── base.html
+    │   ├── base.html0
+    │   ├── base.html4
+    │   ├── prediction.html
+    │   └── user.html
+    └── twitter.py
+
+2 directories, 18 files

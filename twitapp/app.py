@@ -105,7 +105,7 @@ def create_app():
                 if not username[i]:
                     username[i] = filler
         
-
+        # evaluate if all users are None or the same
         if all(v is None for v in [username[i] for i in range(4)]) or (username[0] == username[1] == username[2] == username[3]):
             message = "Please select two or more different users"
             return render_template('prediction.html', title='Prediction', message=message)
@@ -118,6 +118,7 @@ def create_app():
             message = "Please enter a hypothetical tweet"
             return render_template('prediction.html', title='Prediction', message=message)
         
+        # for a blank tweet
         if len(hypotext) == 0:
             message = "Please enter a hypothetical tweet"
             return render_template('prediction.html', title='Prediction', message=message)
