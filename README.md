@@ -1,5 +1,11 @@
 # HypoTweet
-It's the project directory for `twitapp`, a web application that takes up to 4 users. It connects to Twitter API to pull the user information including user id, latest tweets, tweet id. For a hypothetical tweet it predicts which of the users might have said that.
+
+HypoTweet is a machine learning app that predicts the Twitter author of any given text. Choose upto four twitter users, enter some hypothetical text, and HypoTweet will predict which user is most likely to tweet something similar.
+
+When a new user gets added to the database, the word embeddings of their tweets are obtained via [spaCy](https://spacy.io). When the comparison is run, a logistic regression determines the most likely author.
+
+
+HypoTweet is the project directory for `twitapp`, a web application that takes up to 4 users. It connects to Twitter API to pull the user information including user id, latest tweets, tweet id. For a hypothetical tweet it predicts which of the users might have said that.
 Once a tweet is entered it fits a multiclass logistic regression on the selected users' tweets which have previousely been embeded with spacy and stored in database. Then it connects to basilica API to embed the hypothetical tweet into 96 vectors and then runs a prediction on that to identify which user might have said that.
 ___
 
