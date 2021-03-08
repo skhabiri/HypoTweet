@@ -79,7 +79,7 @@ def create_app():
 
         # Might need sort depending on html behavior on how to pass it
         count = 0
-        username = [None] * 4
+        username, filler = [None] * 4, None
 
         for i in range(4):
             name = f'user{i+1}'
@@ -98,15 +98,19 @@ def create_app():
             finally:
                 print("*"*20, username[i])
                 continue
-        if (count < 2) or (username[0] == username[1] == username[2] == username[3]):
-            message = "Please select two or more different users"
-            return render_template('prediction.html', title='Prediction', message=message)
+    
         
-        # Not-selected users are filled with one the selected ones
-        elif count != 4:
+        # Not-selected users are filled with one of the selected ones
+        if count != 4:
             for i in range(4):
                 if not username[i]:
                     username[i] = filler
+        
+
+        if all(v is None for v in [username[i] for i in range(4)]) or (username[0] == username[1] == username[2] == username[3]):
+            message = "Please select two or more different users"
+            return render_template('prediction.html', title='Prediction', message=message)
+
 
         try:
             hypotext = request.values['tweet_text']
