@@ -97,7 +97,6 @@ def create_app():
             # always enter this
             finally:
                 print("*"*20, username[i])
-                continue
     
         
         # Not-selected users are filled with one of the selected ones
