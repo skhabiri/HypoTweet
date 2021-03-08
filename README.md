@@ -64,7 +64,7 @@ Flask is a python web application framework. As an example, Plotly dash is built
 steps to follow:
 * Create twitoff repository
 * git clone the repo on your local machine
-* create virtual environment `pipenv --python 3.7`
+* create virtual environment `pipenv --python 3.8`
 * pipenv shell
 * pipenv install flask jinja2 flask-sqlalchemy
 * Create a basic app with hello.py
